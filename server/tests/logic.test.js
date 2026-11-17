@@ -1,0 +1,4 @@
+const {filterCandidates,detectConflicts,splitBudget}=require("../src/logic");
+test("constraint filters enforce budget, dietary tags and hours",()=>{const v=[{name:"A",pricePerPerson:20,dietaryTags:["vegetarian"],hours:{open:"09:00",close:"22:00"}},{name:"B",pricePerPerson:30,dietaryTags:["vegetarian"],hours:{open:"09:00",close:"22:00"}}];expect(filterCandidates(v,{budget:25,dietaryTags:["vegetarian"],time:"12:00"}).map(x=>x.name)).toEqual(["A"])});
+test("overlapping items are flagged",()=>{expect(detectConflicts([{_id:"1",dayIndex:0,startTime:"10:00",endTime:"12:00",venueName:"Museum",pricePerPerson:10},{_id:"2",dayIndex:0,startTime:"11:00",endTime:"13:00",venueName:"Tour",pricePerPerson:5}],100)[0].type).toBe("overlap")});
+test("even budget split reconciles",()=>{expect(splitBudget([{amount:100}],["A","B"])).toEqual([{person:"A",amount:50},{person:"B",amount:50}])});

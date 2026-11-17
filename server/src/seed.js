@@ -1,0 +1,11 @@
+require("dotenv").config();const mongoose=require("mongoose"),{Venue}=require("./models");
+const venues=[
+{destination:"Lisbon",name:"Taberna Verde",category:"dinner",pricePerPerson:22,dietaryTags:["vegetarian","vegan"],hours:{open:"11:00",close:"22:00"},coordinates:{lat:38.7139,lng:-9.1394},rating:4.7,description:"Neighborhood restaurant with plant-based options."},
+{destination:"Lisbon",name:"Alfama Viewpoint Walk",category:"sightseeing",pricePerPerson:0,dietaryTags:["vegetarian","vegan","halal","gluten-free"],hours:{open:"06:00",close:"21:00"},coordinates:{lat:38.711,lng:-9.13},rating:4.8,description:"Scenic walk through historic lanes and viewpoints."},
+{destination:"Lisbon",name:"Riverside Kayak",category:"adventure",pricePerPerson:35,dietaryTags:["vegetarian","vegan","halal","gluten-free"],hours:{open:"09:00",close:"17:00"},coordinates:{lat:38.697,lng:-9.205},rating:4.5,description:"Guided river kayaking; weather dependent."},
+{destination:"Lisbon",name:"Pastel Café",category:"cafe",pricePerPerson:8,dietaryTags:["vegetarian"],hours:{open:"08:00",close:"18:00"},coordinates:{lat:38.714,lng:-9.142},rating:4.4,description:"Small cafe for coffee and pastries."},
+{destination:"Lisbon",name:"Harbor Seafood House",category:"dinner",pricePerPerson:48,dietaryTags:["gluten-free"],hours:{open:"12:00",close:"23:00"},coordinates:{lat:38.707,lng:-9.136},rating:4.6,description:"Seafood restaurant with gluten-free choices."},
+{destination:"Lisbon",name:"Garden Table",category:"dinner",pricePerPerson:18,dietaryTags:["vegetarian","vegan","gluten-free"],hours:{open:"12:00",close:"21:00"},coordinates:{lat:38.72,lng:-9.15},rating:4.3,description:"Garden cafe with flexible vegetarian and vegan dishes."},
+{destination:"Lisbon",name:"Old Town Museum",category:"culture",pricePerPerson:12,dietaryTags:["vegetarian","vegan","halal","gluten-free"],hours:{open:"10:00",close:"16:00"},coordinates:{lat:38.71,lng:-9.14},rating:4.2,description:"Local history museum; last entry before closing."}
+];
+mongoose.connect(process.env.MONGO_URI).then(async()=>{await Venue.deleteMany({destination:"Lisbon"});await Venue.insertMany(venues);console.log(`Seeded ${venues.length} Lisbon venues`);await mongoose.disconnect()}).catch(e=>{console.error(e);process.exit(1)});
